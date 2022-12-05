@@ -80,8 +80,8 @@ int loop_getline(void)
 		/* test get line function failed or not */
 		if (nbrchar_read == -1)
 		{
-			printf("Error getline\n");
-			return (-1);
+			free(line);
+			exit(0);
 		}
 		if (feof(stdin))
 		{
