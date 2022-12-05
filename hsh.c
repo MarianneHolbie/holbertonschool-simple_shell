@@ -23,6 +23,9 @@ void split_string(char *line, char **array)
 		array[i] = ptr;
 		i++;
 	}
+	/* add NULL element at end for exec function */
+	array[i] = NULL;
+	ptr = NULL; /* discard pointer ptr */
 }
 
 /**
@@ -68,17 +71,25 @@ int loop_getline(void)
 {
 	char *array[1024], *line = NULL;
 	size_t len = 0;
+	ssize_t nbrchar_read = 0;
 
 	while (1)
 	{
-		getline(&line, &len, stdin);
+		nbrchar_read = getline(&line, &len, stdin);
 		/* printf("$ "); */
+		/* test get line function failed or not */
+		if (nbrchar_read == -1)
+		{
+			printf("Error getline\n");
+			return (-1);
+		}
 		if (feof(stdin))
 		{
 			free(line);
 			exit(0);
 		}
 		split_string(line, array);
+
 		execve_cmd(array);
 	}
 	free(line);
