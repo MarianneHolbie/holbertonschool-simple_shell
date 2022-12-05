@@ -14,7 +14,7 @@ void split_string(char *line, char **array)
 	ptr = strtok(line, delim);
 	array[0] = ptr;
 	if (!*array)
-		exit(1);
+		exit(0);
 	i++;
 
 	while (ptr != NULL)
