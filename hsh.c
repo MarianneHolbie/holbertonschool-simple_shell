@@ -8,11 +8,13 @@
 
 void split_string(char *line, char **array)
 {
-	char *delim = " \n", *ptr;
+	char *delim = " \n\t\r", *ptr = NULL;
 	int i = 0;
 
 	ptr = strtok(line, delim);
 	array[0] = ptr;
+	if (!*array)
+		exit(1);
 	i++;
 
 	while (ptr != NULL)
@@ -70,21 +72,15 @@ int loop_getline(void)
 	while (1)
 	{
 		getline(&line, &len, stdin);
-
 		/* printf("$ "); */
 		if (feof(stdin))
 		{
 			free(line);
 			exit(0);
 		}
-
-
 		split_string(line, array);
-
 		execve_cmd(array);
-
 	}
-
 	free(line);
 	return (0);
 }
