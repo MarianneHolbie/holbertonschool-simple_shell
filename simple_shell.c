@@ -38,12 +38,15 @@ int execve_cmd(char **array)
 	if (child_pid == -1)
 	{
 		perror("error");
-		return (1);
+		exit(1);
 	}
 	else if (child_pid == 0)
 	{
 		if (execve(array[0], array, environ) == -1)
+		{
 			perror("Error");
+			exit(1);
+		}
 	}
 	else
 		wait(&status);
