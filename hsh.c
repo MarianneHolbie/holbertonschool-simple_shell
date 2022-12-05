@@ -81,6 +81,7 @@ int loop_getline(void)
 		if (nbrchar_read == -1)
 		{
 			free(line);
+			line = NULL;
 			exit(0);
 		}
 		if (feof(stdin))
