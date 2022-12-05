@@ -69,15 +69,15 @@ int loop_getline(void)
 
 	while (1)
 	{
-		printf("$ ");
 		getline(&line, &len, stdin);
 
+		/* printf("$ "); */
 		if (feof(stdin))
 		{
 			free(line);
-			printf("\n");
 			exit(0);
 		}
+
 
 		split_string(line, array);
 
