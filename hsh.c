@@ -11,6 +11,19 @@ void split_string(char *line, char **array)
 	char *delim = " \n\t\r", *ptr = NULL;
 	int i = 0;
 
+	if (line == NULL)
+	{
+		free(line);
+		exit(0);
+	}
+
+	if (!strstr(line, "/"))
+	{
+		free(line);
+		perror("No such file or directory");
+		exit(0);
+	}
+
 	ptr = strtok(line, delim);
 	array[0] = ptr;
 	if (!*array)
@@ -38,6 +51,9 @@ int execve_cmd(char **array)
 {
 	int status;
 	pid_t child_pid;
+
+	if (array[0] == NULL)
+		exit(0);
 
 	child_pid = fork();
 	if (child_pid == -1)
