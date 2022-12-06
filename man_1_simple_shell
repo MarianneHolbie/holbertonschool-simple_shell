@@ -1,22 +1,17 @@
-.TH simple_shell man page
+.TH 
+	simple_shell man page
 
 .SH NAME
-	simple_shell (hsh.c)
+	simple_shell (hsh.c \- line command interpreter in UNIX)
 
 .SH SYNOPSIS
-	int _printf(const char *format, ...)
-
+	$ /hsh [options] [file]
+	
 .SH DESCRIPTION
-	The function _printf() produce output according to a format as described below. The function 
-	printf() write output to stdout, the standard output stream, using the function write. 
-	The function write the output under the control of a format string that specifies how 
-	subsequent arguments are converted for output.
+	simple_shell (hsh.c) is a UNIX command language interpreter that executes commands read from the standard input or from a file, made in C langage.
 
-.B Format
-	The format string is a character string, beginning and ending in its initial shift state, if 
-	any. The format string is composed of zero or more directives. Each conversion specification 
-	is introduced by the character %, and ends with a conversion specifier. The arguments must 
-	correspond properly with the conversion specifier. 
+.B 
+	./hsh	
 
 .SH OPTIONS
 
