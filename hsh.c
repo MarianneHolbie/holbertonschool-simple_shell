@@ -100,7 +100,7 @@ int loop_getline(void)
 			line = NULL;
 			exit(0);
 		}
-		if (feof(stdin))
+		if (feof(stdin) || line[0] != '/')
 		{
 			free(line);
 			exit(0);
