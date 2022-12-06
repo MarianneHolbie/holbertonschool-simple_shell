@@ -19,29 +19,54 @@
 .SH PATH
 	It search in the PATH env variable to find the executable program file location.
 
-.SH EXAMPLES
-.TS
-center box tab(#);
-l s s 
-r | r c.
-STANDARD INPUT LISTS
-_
-ls#list directory contents.
-_
-ls -l#List in long format file system type.
-_
-pwd# will display the present working directory.
-_
-rm# will remove a file.
-_
-mv# will move or rename one or more files or directories.
-_
-cp# Will copy SOURCE to DEST.
-_
-exit# cause normal process termination.
-_
-ctrl + d, ctrl + c# stop the prompt input.
-.TE
-	
+.SH EXAMPLES OF INPUT COMMAND
+
+ls			list directory contents
+
+ls -l			list in long format file system type
+
+pwd	 		will display the present working directory
+
+rm			will remove a file
+
+mv			will move or rename one or more files or directories
+
+cp			Will copy SOURCE to DEST
+
+exit			cause normal process termination
+
+ctrl + d, ctrl + c	stop the prompt input.
+
+.SH COMMAND EXECUTION
+
+After a command has been split into words, if it results in a simple command and an optional list of arguments, the following actions are taken:
+
+* If the command name contains no slashes, the shell attempts to locate it.  If there exists a shell function by that name, that function is invoked.
+* If the name does not match a function, the shell searches for it in the list of shell builtins.  If a match is found, that builtin is invoked.
+* If the search is successful, or if the command name contains one or more slashes, the shell executes the named program in a child process.
+* If this execution succeeds or fails the status is return.
+
+.SH EXIT STATUS
+
+The exit status of an executed command is the value returned by the wait() system call.
+Exit statuses fall between 0 and 255, though, as explained below, the shell may use values above 125 specially.
+Exit statuses from shell builtins and compound commands are also limited to this range.
+
+Under certain circumstances, the shell will use special values to indicate specific failure modes.
+
 .SH SEE ALSO
 	
+Bash Reference Manual, Brian Fox and Chet Ramey
+
+The Gnu Readline Library, Brian Fox and Chet Ramey
+The Gnu History Library, Brian Fox and Chet Ramey
+Portable Operating System Interface (POSIX) Part 2: Shell and Utilities, IEEE
+Man sh()
+
+.SH BUGS REPORT
+	Please contact the authors.
+	
+.SH AUTHORS
+	Marianne Arrué
+	Gabriel Coëffier
+	Asia Groupierre
