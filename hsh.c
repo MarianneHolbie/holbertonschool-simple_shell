@@ -84,7 +84,7 @@ int loop_getline(void)
 			line = NULL;
 			exit(0);
 		}
-		if (feof(stdin) || line[0] != '/')
+		if (feof(stdin) || !strstr(line, "/"))
 		{
 			free(line);
 			exit(0);
