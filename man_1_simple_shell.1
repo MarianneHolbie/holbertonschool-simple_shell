@@ -42,8 +42,11 @@ ctrl + d, ctrl + c	stop the prompt input.
 After a command has been split into words, if it results in a simple command and an optional list of arguments, the following actions are taken:
 
 * If the command name contains no slashes, the shell attempts to locate it.  If there exists a shell function by that name, that function is invoked.
+
 * If the name does not match a function, the shell searches for it in the list of shell builtins.  If a match is found, that builtin is invoked.
+
 * If the search is successful, or if the command name contains one or more slashes, the shell executes the named program in a child process.
+
 * If this execution succeeds or fails the status is return.
 
 .SH EXIT STATUS
