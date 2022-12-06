@@ -1,14 +1,36 @@
 # holbertonschool-simple_shell
 
  # Simple_shell README
+ 
+### Synopsis: 
 
-Synopsis: This project was made in order to code a simplest version of the shell,  which can be used as an UNIX interpreter.
+This project was made in order to code a simplest version of the shell,  which can be used as an UNIX interpreter.
+
 This project was realized in 10 days, in order to reproduce work conditions, during the second month of apprenticeship with the Holberton School in Toulouse, France.
 
 
 ## About the project
 
 For this project we were mandated to produce a simple shell program, writing a simple UNIX command interpreter.
+
+The project was divided into several tasks in order to implement the program progressively.
+
+At first, the program had to:
+* Display a prompt and wait for the user to type a command. A command line always ends with a new line
+* The prompt is displayed again each time a command has been executed
+* The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features
+* The command lines are made only of one word. No arguments will be passed to programs
+* If an executable cannot be found, print an error message and display the prompt again
+* Handle the “end of file” condition (Ctrl+D)
+
+At the end our simple shell had to handle:
+* errors
+* command lines with arguments
+* the PATH
+* the exit built-in
+* the env built-in, that prints the current environment
+
+### Output
 
 Some instructions we had to follow about the output:
 * Unless specified otherwise, your program must have the exact same output as sh (/bin/sh) as well as the exact same error output.
@@ -21,26 +43,75 @@ $ echo "qwerty" | /bin/../bin/sh
 /bin/../bin/sh: 1: qwerty: not found
 $
 ```
+Same error with your program hsh:
+```$ echo "qwerty" | ./hsh
+./hsh: 1: qwerty: not found
+$ echo "qwerty" | ./././hsh
+./././hsh: 1: qwerty: not found
+$
+```
+### List of allowed functions and system calls
 
-
-We were allowed to use our home-made function _putchar and the following c functions:
-* Write (man 2 write)
-* Malloc (man 3 malloc)
-* Free (man 3 free)
-* Va_start (man 3 va_start)
-* Va_arg (man 3 va_arg)
-* Va_end (man 3 va_end)
-* Va_copy (man 3 va_copy)
+We were allowed to use the following c functions and system calls:
+* access (man 2 access)
+* chdir (man 2 chdir)
+* close (man 2 close)
+* closedir (man 3 closedir)
+* execve (man 2 execve)
+* exit (man 3 exit)
+* _exit (man 2 _exit)
+* fflush (man 3 fflush)
+* fork (man 2 fork)
+* free (man 3 free)
+* getcwd (man 3 getcwd)
+* getline (man 3 getline)
+* getpid (man 2 getpid)
+* isatty (man 3 isatty)
+* kill (man 2 kill)
+* malloc (man 3 malloc)
+* open (man 2 open)
+* opendir (man 3 opendir)
+* perror (man 3 perror)
+* read (man 2 read)
+* readdir (man 3 readdir)
+* signal (man 2 signal)
+* stat (__xstat) (man 2 stat)
+* lstat (__lxstat) (man 2 lstat)
+* fstat (__fxstat) (man 2 fstat)
+* strtok (man 3 strtok)
+* wait (man 2 wait)
+* waitpid (man 2 waitpid)
+* wait3 (man 2 wait3)
+* wait4 (man 2 wait4)
+* write (man 2 write)
 
 Our code was compiled this way :
-`$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c`
+`$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh`
 
-More instructions were:
-* You don’t have to reproduce the buffer handling of the C library printf function
-* You don’t have to handle the flag characters
-* You don’t have to handle field width
-* You don’t have to handle precision
-* You don’t have to handle the length modifiers
+### Testing
+
+Our shell should work like this in interactive mode:
+```$ ./hsh
+($) /bin/ls
+hsh main.c shell.c
+($)
+($) exit
+$
+```
+But also in non-interactive mode:
+```$ echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+$
+$ cat test_ls_2
+/bin/ls
+/bin/ls
+$
+$ cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+$
+```
+
 
 
 ### Built with
@@ -49,78 +120,13 @@ More instructions were:
 * Text editor: Vim
 * Docker.
 
-## Description of the function _printf
+## Description of the simple shell
 
-This custom _printf version permits outputs according to a format specifier which is described below.
-This function writes output to the stdout, the standard output stream.
-It returns the number of counted printed characters when the function is successful and -1 when it fails.
-
-### Function prototype
-
-Our prototype was `int _printf(const char *format, …)` and in order to successfully make this project, we made a main.h header to organize the different sub-functions prototypes created to write outputs.
-
-
-### Options
-
-
-| Option | Description                                     |
-|----------|-----------------------------------------------|
-|  %c     |  Prints a character          |
-|  %s     |  Prints a string                |
-|  %%    |  Prints the % symbol      |
-|  %d     |  Prints a float number     |
-|  %i      |  Prints an integer            |
-|  %b     |  Converts to a binary number |
 
 
 
 
 ## Usage
-Below are examples of how the custom ```_printf``` function can be used:
-
-### With %c option: prints character
-
-**Input**
-
-`_printf("Print a character %c\n, ‘C’');`
-
-**Output**
-```sh
-`Print a character C`
-```
-
-### With %s option: prints string
-
-**Input**
-
-`_printf("%s\n", 'Holberton School.');`
-
-**Output**
-```sh
-Holberton School.
-```
-
-### Integer %d or %i options: prints decimal or integer
-
-**Input**
-
-`_printf("Print an integer %i\n, ‘1354’');`
-
-**Output**
-```sh
-Print an integer 1354
-```
-
-### With %b option: prints in binary
-
-**Input**
-
-`_printf("There is %b bytes in %b KB\n", 1024, 1’');`
-
-**Output**
-```sh
-There is 10000000000 bytes in 1 KB\n
-```
 
 
 
@@ -147,9 +153,11 @@ Thanks to [Taieb](https://github.com/taiebchaabini) for reviewing our project !
 
 ## Authors
 
+**Marianne Arrué**
+GitHub: [@MarianneHolbie](https://github.com/MarianneHolbie)
+
+**Gabriel Coëffier**
+GitHub: [@PhYdrogen](https://github.com/PhYdrogen/)
+
 **Asia Groupierre**
 GitHub: [@AsiaGrpr](https://github.com/AsiaGrpr)
-
-**Sonia Nguyen**
-GitHub: [@soniangn](https://github.com/soniangn)
-
