@@ -1,5 +1,7 @@
 # holbertonschool-simple_shell
 
+Holberton-simple_shell project, made in November 2022 by 3 students from Holbertonschool-Toulouse #C19.
+
  # Simple_shell README
  
 ### Synopsis: 
