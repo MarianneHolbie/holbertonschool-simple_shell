@@ -138,13 +138,14 @@ The simple shell is a command interpreter used to communicate with the Unix syst
 
 ## Manual Page
 
-We have created a Manpage to help in the 
-[Manpage](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/man_3_printf)
+We have created a Manpage to to accompany the user.
+
+[Manpage](https://github.com/MarianneHolbie/)
 
 
 ## Project Files Description
 
-The projects include 6 files as follows:
+The projects include 6 files as follows: (to update withe the finals docs)
 
 * [_printf.c](https://github.com/AsiaGrpr/holbertonschool-printf) - Includes the main function `_printf`.
 * [_putchar.c](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/_putchar.c) - Includes the function `_putchar` that writes the character c to sdout.
