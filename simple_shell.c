@@ -16,8 +16,8 @@
 
 char **split_string(char *line, char **array, int nbrchar_read)
 {
-	char *delim = " \n", *line_copy = NULL, *token = NULL, *test_copy = NULL;
-	int nbr_token = 0, i;
+	char *delim = " \n", *token = NULL;
+	int i = 0;
 
 	if (line == NULL || nbrchar_read < 0)
 	{
@@ -25,53 +25,13 @@ char **split_string(char *line, char **array, int nbrchar_read)
 		exit(0);
 	}
 
-	/* allocate space with number of charactere read in line */
-	line_copy = malloc(sizeof(char) * (nbrchar_read + 1));
-	if (line_copy == NULL)
-	{
-		free(line);
-		perror("memory allocation error");
-		exit(0);
-	}
-
-	/* copy line in line_copy */
-	test_copy = strcpy(line_copy, line);
-	if (test_copy == NULL)
-	{
-		free(line);
-		free(line_copy);
-		exit(0);
-	}
-	printf("line_copy %s\n", line_copy);
-	printf("line %s\n", line);
-
-	/* calculate total number of token */
-	token = strtok(line, delim);
-	printf("token %s\n", token);
-
-	while (token != NULL)
-	{
-		token = strtok(NULL, delim);
-		printf("token %s\n", token);
-		nbr_token++;
-	}
-	nbr_token++;
-	printf("nbr token %d\n", nbr_token);
-
-	/* second loop to put token in the define array */
-	array = malloc(sizeof(char *) * (nbr_token + 1));
-	if (array == NULL)
-		free(array);
-
-	token = strtok(line_copy, delim);
-
 	for (i = 0; token != NULL; i++)
 	{
 		array[i] = malloc(sizeof(char *) * (strlen(token) + 2));
 		if (array[i] == NULL)
 		{
 			free(line);
-			free(line_copy);
+			(line = NULL);
 			exit(0);
 		}
 		array[i] = token;
@@ -157,9 +117,10 @@ int loop_getline(void)
 		cmd = split_string(line, array, nbrchar_read);
 
 		printf("array[%d] = %s\n", i, cmd[i]);
-		path = _getenv("PATH");
-		if (path == NULL)
-			exit(0);
+		path = getenv("PATH");
+		/*path = _getenv("PATH");*/
+		/*if (path == NULL)
+			exit(0);*/
 		printf("PATH =%s\n", path);
 		printf("cmd[0]=%s\n", cmd[0]);
 
@@ -172,22 +133,11 @@ int loop_getline(void)
 		execve_cmd(cmd);
 
 
-		free(fullpath);
-		free(line);
-		for (i = 0; !cmd[i]; i++)
-		{
-			free(cmd[i]);
-		}
-		free(cmd);
-		free(path);
-		path = NULL;
-		fullpath = NULL;
-		line = NULL;
-		cmd = NULL;
+		 line = NULL;
+		 nbrchar_read = 0;
 
 	}
 
-	free(line);
 	return (0);
 }
 
