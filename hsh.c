@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  * split_string- split getline in array of word
  * @line: string to split
