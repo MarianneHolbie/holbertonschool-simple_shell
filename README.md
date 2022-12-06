@@ -4,14 +4,17 @@
  
 ### Synopsis: 
 
-This project was made in order to code a simplest version of the shell,  which can be used as an UNIX interpreter.
+This project was made in order to code a simplest version of the shell, which is an UNIX interpreter.
 
-This project was realized in 10 days, in order to reproduce work conditions, during the second month of apprenticeship with the Holberton School in Toulouse, France.
+This project was realized in 10 days, in order to reproduce work conditions, during the third month of learning with the Holberton School in Toulouse, France.
 
 
 ## About the project
 
 For this project we were mandated to produce a simple shell program, writing a simple UNIX command interpreter.
+
+The simple shell had to read commands from the standard input and execute them.
+The shell invokes the program, specified as command, as a child process.
 
 The project was divided into several tasks in order to implement the program progressively.
 
@@ -24,11 +27,11 @@ At first, the program had to:
 * Handle the “end of file” condition (Ctrl+D)
 
 At the end our simple shell had to handle:
-* errors
-* command lines with arguments
-* the PATH
-* the exit built-in
-* the env built-in, that prints the current environment
+* Errors
+* Command lines with arguments
+* The PATH
+* The exit built-in
+* The env built-in, that prints the current environment
 
 ### Output
 
@@ -112,8 +115,6 @@ hsh main.c shell.c test_ls_2
 $
 ```
 
-
-
 ### Built with
 
 * Language: C
@@ -122,16 +123,22 @@ $
 
 ## Description of the simple shell
 
+The simple shell is a copy of the UNIX shell, wich is an interactive user interface with an operating system.
 
+The program understands and executes the commands entered by the user as input, and give results as output.
 
-
+To performs a command or an executable in shell, there is 3 steps:
+* The simple shell read and execute its configuration files, to change the shell's behavior
+* The commands are read from stdin and executes them
+* After command execution, the simple shell make any shutdown commands, frees up the memory allocations and terminates processes.
 
 ## Usage
 
-
+The simple shell is a command interpreter used to communicate with the Unix system.
 
 ## Manual Page
 
+We have created a Manpage to help in the 
 [Manpage](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/man_3_printf)
 
 
