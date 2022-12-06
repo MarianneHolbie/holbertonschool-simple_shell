@@ -1,23 +1,30 @@
-.TH 
-	simple_shell man page
+.TH
+
+simple_shell man page
 
 .SH NAME
-	simple_shell (hsh.c \- line command interpreter in UNIX)
+
+simple_shell (hsh.c \- line command interpreter in UNIX)
 
 .SH SYNOPSIS
-	$ /hsh [options] [file]
+
+$ /hsh [options] [file]
 	
 .SH DESCRIPTION
-	simple_shell (hsh.c) is a UNIX command language interpreter that executes commands read from the standard input or from a file, made in C langage.
+
+simple_shell (hsh.c) is a UNIX command language interpreter that executes commands read from the standard input or from a file, made in C langage.
 
 .B 
-	./hsh	It's a simple UNIX command line interpreter.
+
+ ./hsh	It's a simple UNIX command line interpreter.
 
 .SH RETURN VALUE
-	The program return the status of the last executed command ( 0 if no command was executed), the number means exit fail situation.
+
+The program return the status of the last executed command ( 0 if no command was executed), the number means exit fail situation.
 	
 .SH PATH
-	It search in the PATH env variable to find the executable program file location.
+
+It search in the PATH env variable to find the executable program file location.
 
 .SH EXAMPLES OF INPUT COMMAND
 
@@ -58,7 +65,7 @@ Exit statuses from shell builtins and compound commands are also limited to this
 Under certain circumstances, the shell will use special values to indicate specific failure modes.
 
 .SH SEE ALSO
-	
+
 Bash Reference Manual, Brian Fox and Chet Ramey
 
 The Gnu Readline Library, Brian Fox and Chet Ramey
@@ -67,9 +74,11 @@ Portable Operating System Interface (POSIX) Part 2: Shell and Utilities, IEEE
 Man sh()
 
 .SH BUGS REPORT
-	Please contact the authors.
+
+Please contact the authors.
 	
 .SH AUTHORS
-	Marianne Arrué
-	Gabriel Coëffier
-	Asia Groupierre
+
+Marianne Arrué
+Gabriel Coëffier
+Asia Groupierre
