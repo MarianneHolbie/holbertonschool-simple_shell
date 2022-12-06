@@ -1,5 +1,7 @@
 # holbertonschool-simple_shell
 
+Holberton-simple_shell project, made in November 2022 by 3 students from Holbertonschool-Toulouse #C19.
+
  # Simple_shell README
  
 ### Synopsis: 
@@ -32,6 +34,17 @@ At the end our simple shell had to handle:
 * The PATH
 * The exit built-in
 * The env built-in, that prints the current environment
+
+### Execute the program
+
+In order to use this simple_shell program, in the interactive mode, it need to be executed in a Shell command terminal.
+
+Follow this steps:
+* Compile it with this line command:
+```gcc -Wall -Werror -Wextra -pedantic *.c -o hsh```
+* Run it with:
+```./hsh```
+* You can now run some command in the simple shell, if you want to exit it type this command line: Ctrl + c, Ctrl + d or exit.
 
 ### Output
 
