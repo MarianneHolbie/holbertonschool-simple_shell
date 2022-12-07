@@ -1,0 +1,4 @@
+#ignore tout les .bash
+*.bash
+*.sh
+hsh

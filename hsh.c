@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  * split_string- split getline in array of word
  * @line: string to split
@@ -49,7 +50,7 @@ void split_string(char *line, char **array)
  */
 int execve_cmd(char **array)
 {
-	int status;
+	int status, retour_execv = 0;
 	pid_t child_pid;
 
 	if (array[0] == NULL)
@@ -63,7 +64,8 @@ int execve_cmd(char **array)
 	}
 	else if (child_pid == 0)
 	{
-		if (execve(array[0], array, environ) == -1)
+		retour_execv = execve(array[0], array, environ);
+		if (retour_execv == -1)
 		{
 			perror("Error");
 			exit(1);
@@ -71,8 +73,10 @@ int execve_cmd(char **array)
 	}
 	else
 		wait(&status);
-
-	return (0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else
+		return (status);
 }
 
 
@@ -88,6 +92,7 @@ int loop_getline(void)
 	char *array[1024], *line = NULL;
 	size_t len = 0;
 	ssize_t nbrchar_read = 0;
+	int i = 0;
 
 	while (1)
 	{
@@ -100,14 +105,15 @@ int loop_getline(void)
 			line = NULL;
 			exit(0);
 		}
-		if (feof(stdin) || line[0] != '/')
+		if (feof(stdin) || !strstr(line, "/"))
 		{
 			free(line);
 			exit(0);
 		}
 		split_string(line, array);
-
-		execve_cmd(array);
+		i = execve_cmd(array);
+		if (i != 0)
+			exit(i);
 	}
 	free(line);
 	return (0);

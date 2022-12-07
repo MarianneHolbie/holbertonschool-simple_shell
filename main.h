@@ -13,17 +13,17 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-/*
- * struct Node- single linkes list
- * @str: string
+/**
+ * struct node - single linkes list
+ * @path_directory: string
  * @next: point to the next node
- * Descroption: singly linked list of node structure
+ * Description: singly linked list of node structure
  */
 
 typedef struct node
 {
-        char *path_directory;
-        struct node *next;
+	char *path_directory;
+	struct node *next;
 } node_t;
 
 
@@ -40,8 +40,8 @@ int _setenv(const char *name, const char *value, int overwrite);
 /* construct NAME=VALUE for environment variable */
 char *build_var_env(const char *name, const char *value);
 /* add or change value of environment variable */
- int _setenv(const char *name, const char *value, int overwrite);
+int _setenv(const char *name, const char *value, int overwrite);
 /* implicit declaration of getline so i define it*/
- ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif
