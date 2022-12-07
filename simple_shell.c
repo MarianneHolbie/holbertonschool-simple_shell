@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include "main.h"
 
 /**
@@ -25,7 +20,9 @@ char **split_string(char *line, char **array, int nbrchar_read)
 		free(line);
 		exit(0);
 	}
+
 	token = strtok(line, delim);
+
 
 	for (i = 0; token != NULL; i++)
 	{
@@ -109,14 +106,17 @@ int loop_getline(void)
 			printf("\n");
 			exit(0);
 		}
+		if (strcmp(line, "\n")) /* test if line = \n */
+		{
 		cmd = split_string(line, array, nbrchar_read);
 		path = getenv("PATH");
 
 		fullpath = _which(cmd[0], fullpath, path);
 		cmd[0] = fullpath;
 		execve_cmd(cmd);
-		 line = NULL;
-		 nbrchar_read = 0;
+		}
+		line = NULL;
+		nbrchar_read = 0;
 	}
 	return (0);
 }
