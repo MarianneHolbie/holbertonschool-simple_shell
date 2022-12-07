@@ -111,7 +111,7 @@ int loop_getline(void)
 		if (strcmp(line, "\n")) /* test if line = \n */
 		{
 			cmd = split_string(line, array, nbrchar_read);
-			path = _getenv("PATH");
+			path = getenv("PATH");
 
 			fullpath = _which(cmd[0], fullpath, path);
 			cmd[0] = fullpath;
