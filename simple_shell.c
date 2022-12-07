@@ -24,6 +24,7 @@ char **split_string(char *line, char **array, int nbrchar_read)
 		free(line);
 		exit(0);
 	}
+	token = strtok(line, delim);
 
 	for (i = 0; token != NULL; i++)
 	{
