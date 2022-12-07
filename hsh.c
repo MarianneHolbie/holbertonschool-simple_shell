@@ -1,45 +1,44 @@
 #include "main.h"
 
-
 /**
  * split_string- split getline in array of word
  * @line: string to split
  * @array: array to stock word
+ * @nbrchar_read: nbr char read by function getline
+ * Return: array of word to split getline
  **/
 
-void split_string(char *line, char **array)
+
+char **split_string(char *line, char **array, int nbrchar_read)
 {
-	char *delim = " \n\t\r", *ptr = NULL;
+	char *delim = " \n\t\r", *token = NULL;
 	int i = 0;
 
-	if (line == NULL)
+	if (line == NULL || nbrchar_read < 0)
 	{
 		free(line);
 		exit(0);
 	}
 
-	if (!strstr(line, "/"))
-	{
-		free(line);
-		perror("No such file or directory");
-		exit(0);
-	}
+	token = strtok(line, delim);
 
-	ptr = strtok(line, delim);
-	array[0] = ptr;
-	if (!*array)
-		exit(0);
-	i++;
 
-	while (ptr != NULL)
+	for (i = 0; token != NULL; i++)
 	{
-		ptr = strtok(NULL, delim);
-		array[i] = ptr;
-		i++;
+		array[i] = malloc(sizeof(char *) * (strlen(token) + 2));
+		if (array[i] == NULL)
+		{
+			free(line);
+			(line = NULL);
+			exit(0);
+		}
+		array[i] = token;
+
+		token = strtok(NULL, delim);
 	}
-	/* add NULL element at end for exec function */
 	array[i] = NULL;
-	ptr = NULL; /* discard pointer ptr */
+	return (array);
+
 }
 
 /**
@@ -50,26 +49,26 @@ void split_string(char *line, char **array)
  */
 int execve_cmd(char **array)
 {
-	int status, retour_execv = 0;
+	char *cmd = NULL;
+	int status;
 	pid_t child_pid;
 
 	if (array[0] == NULL)
 		exit(0);
 
+	if (array)
+		cmd = array[0];
+
 	child_pid = fork();
 	if (child_pid == -1)
 	{
 		perror("error");
-		exit(1);
+		return (1);
 	}
 	else if (child_pid == 0)
 	{
-		retour_execv = execve(array[0], array, environ);
-		if (retour_execv == -1)
-		{
+		if (execve(cmd, array, environ) == -1)
 			perror("Error");
-			exit(1);
-		}
 	}
 	else
 		wait(&status);
@@ -78,7 +77,6 @@ int execve_cmd(char **array)
 	else
 		return (status);
 }
-
 
 /**
  * loop_getline- loop function getline
@@ -89,33 +87,44 @@ int execve_cmd(char **array)
 
 int loop_getline(void)
 {
-	char *array[1024], *line = NULL;
+	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
-	ssize_t nbrchar_read = 0;
+	ssize_t nbrchar_read;
 	int i = 0;
 
-	while (1)
+	while (1) /* loop for shell prompt */
 	{
 		nbrchar_read = getline(&line, &len, stdin);
-		/* printf("$ "); */
-		/* test get line function failed or not */
+
 		if (nbrchar_read == -1)
 		{
 			free(line);
 			line = NULL;
-			exit(0);
+			return (-1);
 		}
-		if (feof(stdin) || !strstr(line, "/"))
+		if (feof(stdin))
 		{
 			free(line);
+			printf("\n");
 			exit(0);
 		}
-		split_string(line, array);
-		i = execve_cmd(array);
-		if (i != 0)
-			exit(i);
+		if (strcmp(line, "\n")) /* test if line = \n */
+		{
+			cmd = split_string(line, array, nbrchar_read);
+			path = _getenv("PATH");
+
+			fullpath = _which(cmd[0], fullpath, path);
+			cmd[0] = fullpath;
+			i = execve_cmd(cmd);
+			if (i != 0) /* si le programme enfant s'est mal fini*/
+			{
+				free(line);
+				exit(i);
+			}
+		}
+		line = NULL;
+		nbrchar_read = 0;
 	}
-	free(line);
 	return (0);
 }
 
