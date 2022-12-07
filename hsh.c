@@ -97,7 +97,10 @@ int loop_getline(void)
 		split_string(line, array);
 		i = execve_cmd(array);
 		if (i != 0)
+		{
+			free(line);
 			exit(i);
+		}
 	}
 	free(line);
 	return (0);
