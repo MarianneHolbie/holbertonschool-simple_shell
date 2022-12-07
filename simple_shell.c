@@ -9,9 +9,10 @@
  **/
 
 
+
 char **split_string(char *line, char **array, int nbrchar_read)
 {
-	char *delim = " \n\t\r", *token = NULL;
+	char *delim = " \n", *token = NULL;
 	int i = 0;
 
 	if (line == NULL || nbrchar_read < 0)
@@ -72,10 +73,8 @@ int execve_cmd(char **array)
 	}
 	else
 		wait(&status);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else
-		return (status);
+
+	return (0);
 }
 
 /**
@@ -90,7 +89,6 @@ int loop_getline(void)
 	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
 	ssize_t nbrchar_read;
-	int i = 0;
 
 	while (1) /* loop for shell prompt */
 	{
@@ -110,17 +108,12 @@ int loop_getline(void)
 		}
 		if (strcmp(line, "\n")) /* test if line = \n */
 		{
-			cmd = split_string(line, array, nbrchar_read);
-			path = _getenv("PATH");
+		cmd = split_string(line, array, nbrchar_read);
+		path = getenv("PATH");
 
-			fullpath = _which(cmd[0], fullpath, path);
-			cmd[0] = fullpath;
-			i = execve_cmd(cmd);
-			if (i != 0) /* si le programme enfant s'est mal fini*/
-			{
-				free(line);
-				exit(i);
-			}
+		fullpath = _which(cmd[0], fullpath, path);
+		cmd[0] = fullpath;
+		execve_cmd(cmd);
 		}
 		line = NULL;
 		nbrchar_read = 0;
@@ -140,3 +133,4 @@ int main(void)
 
 	return (0);
 }
+
