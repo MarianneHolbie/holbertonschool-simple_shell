@@ -10,6 +10,7 @@
  * @line: string to split
  * @array: array to stock word
  * @nbrchar_read: nbr char read by function getline
+ * Return: array of word to split getline
  **/
 
 
@@ -36,13 +37,10 @@ char **split_string(char *line, char **array, int nbrchar_read)
 			exit(0);
 		}
 		array[i] = token;
-		printf("array[%d] = %s\n", i, array[i]);
 
 		token = strtok(NULL, delim);
 	}
 	array[i] = NULL;
-	printf("array[0] = %s\n", array[0]);
-	line_copy = NULL;
 	return (array);
 
 }
@@ -94,12 +92,10 @@ int loop_getline(void)
 	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
 	ssize_t nbrchar_read;
-	int i = 0;
 
 	while (1) /* loop for shell prompt */
 	{
 		nbrchar_read = getline(&line, &len, stdin);
-		printf("Nbr char read:%ld\n", nbrchar_read);
 
 		if (nbrchar_read == -1)
 		{
@@ -107,38 +103,21 @@ int loop_getline(void)
 			line = NULL;
 			return (-1);
 		}
-
 		if (feof(stdin))
 		{
 			free(line);
 			printf("\n");
 			exit(0);
 		}
-
 		cmd = split_string(line, array, nbrchar_read);
-
-		printf("array[%d] = %s\n", i, cmd[i]);
 		path = getenv("PATH");
-		/*path = _getenv("PATH");*/
-		/*if (path == NULL)
-			exit(0);*/
-		printf("PATH =%s\n", path);
-		printf("cmd[0]=%s\n", cmd[0]);
 
 		fullpath = _which(cmd[0], fullpath, path);
-		printf("fullpath =%s\n", fullpath);
-
 		cmd[0] = fullpath;
-		printf("cmd[0] =%s\n", cmd[0]);
-
 		execve_cmd(cmd);
-
-
 		 line = NULL;
 		 nbrchar_read = 0;
-
 	}
-
 	return (0);
 }
 
