@@ -30,7 +30,7 @@ typedef struct node
 extern char **environ;
 
 char *_which(char *cmd, char *fullpath, char *path_var);
-char *_getenv(const char *name);
+char *_getenv(char *name);
 /* liste all directory path */
 char *_directory_path(char *path);
 /* create linked list of path directory */
