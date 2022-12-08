@@ -1,21 +1,19 @@
 #include "main.h"
 
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
-	char **g, *found = NULL, *token = NULL;
-	int i = 0;
+	char **env;
+	char *ptr, *namecopy;
 
-	g = environ;
-	while (g[i])
+	for (env = environ; *env != NULL; env++)
 	{
-		found = strstr(g[i], name);
-		if (found)
+		for (ptr = *env, namecopy = name; *ptr == *namecopy; ptr++, namecopy++)
 		{
-			token = strtok(found, "=");
-			token = strtok(NULL, "=");
-			return (token);
+			if (*ptr == '=')
+				break;
 		}
-		i++;
+		if ((*ptr == '=') && (*namecopy == '\0'))
+			return (ptr + 1);
 	}
 	return (NULL);
 }
