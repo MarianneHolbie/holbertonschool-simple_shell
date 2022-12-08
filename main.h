@@ -29,6 +29,7 @@ typedef struct node
 
 extern char **environ;
 
+void free_malloc(char **token, char *path, char *line, char *fullpath, int fp_malloc);
 char *_which(char *cmd, char *fullpath, char *path_var);
 char *_getenv(char *name);
 /* liste all directory path */
