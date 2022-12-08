@@ -168,13 +168,16 @@ int loop_getline(void)
 			cmd = split_string(line, array, nbrchar_read);
 			path = _getenv("PATH");
 
-			fullpath = _which(cmd[0], fullpath, path);
-			if (fullpath == NULL)
-				fullpath = cmd[0];
-			else
+			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
 			{
-				flag_malloc = 1;
-				cmd[0] = fullpath;
+				fullpath = _which(cmd[0], fullpath, path);
+				if (fullpath == NULL)
+					fullpath = cmd[0];
+				else
+				{
+					flag_malloc = 1;
+					cmd[0] = fullpath;
+				}
 			}
 			i = execve_cmd(cmd);
 			if (i != 0) /* si le programme enfant s'est mal fini*/
