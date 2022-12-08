@@ -21,8 +21,8 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	}
 
 	token = strtok(line, delim);
-
-	array = malloc(sizeof(char *) * (strlen(token) + 1));
+	/* +2 because add also NULL */
+	array = malloc(sizeof(char *) * (strlen(token) + 2));
 	if (array == NULL)
 	{
 		free(line);
@@ -70,6 +70,7 @@ int execve_cmd(char **array)
 	{
 		if (execve(cmd, array, environ) == -1)
 			perror("Error");
+		
 	}
 	else
 		wait(&status);
@@ -148,6 +149,8 @@ int loop_getline(void)
 
 	while (1) /* loop for shell prompt */
 	{
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "$ ", 2); /* print $ in the beginning of line */
 		nbrchar_read = getline(&line, &len, stdin);
 
 		if (nbrchar_read == -1)
@@ -166,6 +169,9 @@ int loop_getline(void)
 		{
 			cmd = split_string(line, array, nbrchar_read);
 			path = _getenv("PATH");
+
+			if (strcmp(*cmd, "env\n") == 0)
+				print_full_env();
 
 			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
 			{
