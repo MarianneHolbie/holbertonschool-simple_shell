@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * _getenv - get the environment
+ * @name: name used as argument
+ *
+ * Return: ptr or NULL value
+ */
 char *_getenv(char *name)
 {
 	char **env;
