@@ -156,11 +156,10 @@ int loop_getline(void)
 			line = NULL;
 			return (-1);
 		}
-		if (feof(stdin))
+		if (feof(stdin) || strncmp(line, "exit", 4) == 0)
 		{
 			free(line);
 			line = NULL;
-			printf("\n");
 			exit(0);
 		}
 		if (strcmp(line, "\n")) /* test if line = \n */
