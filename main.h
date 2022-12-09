@@ -22,7 +22,7 @@
 /**
  * struct built_s - linked list of builtins
  * @name of builtin
- * @func: pointer to function 
+ * @func: pointer to function
  * Description: struct for builtin functions
  */
 
@@ -30,7 +30,7 @@ typedef struct builtin_s
 {
 	char *name;
 	int (*func)(void);
-}builtin_t;
+} builtin_t;
 
 /* environment variable */
 extern char **environ;

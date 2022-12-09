@@ -123,8 +123,7 @@ char *_which(char *cmd, char *fullpath, char *path_var)
 		fullpath[path_len + cmd_len + 1] = '\0';
 		/* check access to file and right of execution */
 		if (access(fullpath, X_OK) != 0) /* if not executable */
-		{
-			free(fullpath);
+		{	free(fullpath);
 			fullpath = NULL;
 			token = strtok(NULL, ":");
 		}
@@ -137,17 +136,15 @@ char *_which(char *cmd, char *fullpath, char *path_var)
 
 /**
  * loop_getline- loop function getline
- * @envp: environment
  * Return: 0
  */
 
-int loop_getline()
+int loop_getline(void)
 {
 	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
 	ssize_t nbrchar_read;
 	int i = 0, flag_malloc = 0;
-	
 
 	while (1) /* loop for shell prompt */
 	{
@@ -155,15 +152,13 @@ int loop_getline()
 			write(STDOUT_FILENO, "$ ", 2); /* print $ in the beginning of line */
 		nbrchar_read = getline(&line, &len, stdin);
 		if (nbrchar_read == -1)
-		{
-			free(line), line = NULL;
+		{	free(line), line = NULL;
 			return (-1);
 		}
 		if (feof(stdin) || strncmp(line, "exit", 4) == 0)
 			free(line), line = NULL, exit(0);
 		if (strcmp(line, "\n") != 0) /* test if line = \n */
-		{
-			cmd = split_string(line, array, nbrchar_read);
+		{	cmd = split_string(line, array, nbrchar_read);
 			if (cmd == NULL)
 				free(line), exit(0);
 			path = _getenv("PATH");
@@ -172,10 +167,9 @@ int loop_getline()
 			else if (path == NULL && access(cmd[0], X_OK) != 0)
 				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
 			else
-			{
+			{	
 				if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
-				{
-					fullpath = _which(cmd[0], fullpath, path);
+				{	fullpath = _which(cmd[0], fullpath, path);
 					if (fullpath == NULL)
 						fullpath = cmd[0];
 					else
@@ -186,7 +180,6 @@ int loop_getline()
 					free_malloc(cmd, line, fullpath, flag_malloc), exit(i);
 			}
 		}
-		/*line = NULL;*/
 		nbrchar_read = 0, free_malloc(cmd, line, fullpath, flag_malloc);
 		line = NULL, path = NULL, fullpath = NULL, flag_malloc = 0;
 	}
