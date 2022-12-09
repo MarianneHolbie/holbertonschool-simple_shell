@@ -147,6 +147,7 @@ int loop_getline(char **envp)
 	size_t len = 0;
 	ssize_t nbrchar_read;
 	int i = 0, flag_malloc = 0;
+	
 
 	while (1) /* loop for shell prompt */
 	{
@@ -166,10 +167,8 @@ int loop_getline(char **envp)
 			if (cmd == NULL)
 				free(line), exit(0);
 			path = _getenv("PATH");
-			if (path && strcmp(*cmd, "env") == 0)
-			{
-				print_full_env(envp);
-			}
+			if (environ && strcmp(*cmd, "env") == 0)
+				print_full_env(environ);
 			else if (path == NULL && access(cmd[0], X_OK) != 0)
 				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
 			else
