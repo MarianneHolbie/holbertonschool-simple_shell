@@ -22,23 +22,24 @@ char **split_string(char *line, char **array, int nbrchar_read)
 
 	token = strtok(line, delim);
 
-	/* +2 because add also NULL */
-	array = malloc(sizeof(char *) * (strlen(token) + 2));
-	if (array == NULL)
-	{
-		free(line);
-		line = NULL;
-		exit(0);
-	}
+			/* +2 because add also NULL */
+			array = malloc(sizeof(char *) * (strlen(token) + 2));
+			if (array == NULL)
+			{
+				free(line);
+				line = NULL;
+				exit(0);
+			}
 
-	for (i = 0; token != NULL; i++)
-	{
-		array[i] = token;
+			for (i = 0; token != NULL; i++)
+			{
+				array[i] = token;
 
-		token = strtok(NULL, delim);
-	}
+				token = strtok(NULL, delim);
+			}
 	array[i] = NULL;
 	token = NULL;
+
 	return (array);
 
 }
@@ -71,7 +72,7 @@ int execve_cmd(char **array)
 	{
 		if (execve(cmd, array, environ) == -1)
 			perror("Error");
-		
+
 	}
 	else
 		wait(&status);
@@ -160,7 +161,7 @@ int loop_getline(void)
 			line = NULL;
 			return (-1);
 		}
-		if (feof(stdin) || strncmp(line, "exit", 4) == 0 || strcmp(line, " "))
+		if (feof(stdin) || strncmp(line, "exit", 4) == 0)
 		{
 			free(line);
 			line = NULL;
@@ -169,6 +170,8 @@ int loop_getline(void)
 		if (strcmp(line, "\n")) /* test if line = \n */
 		{
 			cmd = split_string(line, array, nbrchar_read);
+			if (cmd == NULL)
+				exit(0);
 			path = _getenv("PATH");
 
 			if (strcmp(*cmd, "env\n") == 0)
