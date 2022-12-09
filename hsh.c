@@ -198,7 +198,8 @@ int loop_getline(void)
 			i = execve_cmd(cmd);
 			if (i != 0) /* si le programme enfant s'est mal fini*/
 			{
-				free(line);
+				free_malloc(cmd, path, line, fullpath, flag_malloc);
+				/*free(line);*/
 				exit(i);
 			}
 		}
