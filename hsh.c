@@ -20,10 +20,8 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	}
 
 	token = strtok(line, delim);
-
 	if (token == NULL)
 		return (0);
-
 
 	/* +2 because add also NULL */
 	array = malloc(sizeof(char *) * (strlen(token) + 2));
@@ -33,7 +31,6 @@ char **split_string(char *line, char **array, int nbrchar_read)
 		line = NULL;
 		exit(0);
 	}
-
 	for (i = 0; token != NULL; i++)
 	{
 		array[i] = token;
@@ -43,7 +40,6 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	token = NULL;
 
 	return (array);
-
 }
 
 /**
