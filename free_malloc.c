@@ -10,12 +10,11 @@
  *
  */
 
-void free_malloc(char **token, char *path, char *line,
+void free_malloc(char **token, char *line,
 		char *fullpath, int fp_malloc)
 {
-	(void)path;
-	/*free(path);*/
-	free(token);
+	if (token != NULL)
+		free(token);
 	free(line);
 	if (fp_malloc == 1)
 		free(fullpath);
