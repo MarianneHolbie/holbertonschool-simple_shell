@@ -5,13 +5,13 @@
  *
  */
 
-void print_full_env()
+void print_full_env(void)
 {
 	int i = 0;
 	char **g;
 
 	g = environ;
-	
+
 	for (i = 0; g[i] != NULL; i++)
 		printf("%s\n", g[i]);
 }

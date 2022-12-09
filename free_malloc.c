@@ -7,6 +7,7 @@
  * @line: pointer of line sort of getline
  * @fullpath: point full path of command
  * @fp_malloc: flag to view if full_path is malloc
+ *
  */
 
 void free_malloc(char **token, char *path, char *line,
