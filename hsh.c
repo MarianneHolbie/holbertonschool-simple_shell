@@ -170,8 +170,8 @@ int loop_getline(char **envp)
 			path = _getenv("PATH");
 			if (path == NULL && access(cmd[0], X_OK) != 0)
 				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
-			if (strcmp(*cmd, "env\n") == 0)
-				print_full_env(envp);
+			if (strcmp(*cmd, "env") == 0)
+				print_full_env(envp), exit(0);
 			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
 			{	fullpath = _which(cmd[0], fullpath, path);
 				if (fullpath == NULL)
