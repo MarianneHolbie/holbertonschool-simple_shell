@@ -141,7 +141,7 @@ char *_which(char *cmd, char *fullpath, char *path_var)
  * Return: 0
  */
 
-int loop_getline(char **envp)
+int loop_getline()
 {
 	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
@@ -197,15 +197,14 @@ int loop_getline(char **envp)
  * main- loop shell prompt
  * @argc: count arg
  * @argv: arguments
- * @envp: environment
  * Return:0
  */
 
-int main(int argc, char *argv[], char *envp[])
+int main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-	loop_getline(envp);
+	loop_getline();
 
 	return (0);
 }
