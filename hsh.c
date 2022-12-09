@@ -21,6 +21,7 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	}
 
 	token = strtok(line, delim);
+
 	/* +2 because add also NULL */
 	array = malloc(sizeof(char *) * (strlen(token) + 2));
 	if (array == NULL)
@@ -159,7 +160,7 @@ int loop_getline(void)
 			line = NULL;
 			return (-1);
 		}
-		if (feof(stdin) || strncmp(line, "exit", 4) == 0)
+		if (feof(stdin) || strncmp(line, "exit", 4) == 0 || strcmp(line, " "))
 		{
 			free(line);
 			line = NULL;
