@@ -156,62 +156,34 @@ int loop_getline(void)
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2); /* print $ in the beginning of line */
 		nbrchar_read = getline(&line, &len, stdin);
-
 		if (nbrchar_read == -1)
-		{
-			free(line);
-			line = NULL;
+		{	free(line), line = NULL;
 			return (-1);
 		}
 		if (feof(stdin) || strncmp(line, "exit", 4) == 0)
-		{
-			free(line);
-			line = NULL;
-			exit(0);
-		}
+			free(line), line = NULL, exit(0);
 		if (strcmp(line, "\n") != 0) /* test if line = \n */
-		{
-			cmd = split_string(line, array, nbrchar_read);
+		{	cmd = split_string(line, array, nbrchar_read);
 			if (cmd == NULL)
-			{
-				free(line);
-				exit(0);
-			}
+				free(line),	exit(0);
 			path = _getenv("PATH");
 			if (path == NULL && access(cmd[0], X_OK) != 0)
-				exit(127);
-				/*dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);*/
-
+				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
 			if (strcmp(*cmd, "env\n") == 0)
 				print_full_env();
-
 			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
-			{
-				fullpath = _which(cmd[0], fullpath, path);
+			{	fullpath = _which(cmd[0], fullpath, path);
 				if (fullpath == NULL)
 					fullpath = cmd[0];
 				else
-				{
-					flag_malloc = 1;
-					cmd[0] = fullpath;
-				}
+					flag_malloc = 1, cmd[0] = fullpath;
 			}
 			i = execve_cmd(cmd);
 			if (i != 0) /* si le programme enfant s'est mal fini*/
-			{
-				free_malloc(cmd, path, line, fullpath, flag_malloc);
-				/*free(line);*/
-				exit(i);
-			}
-		}
-		/*line = NULL;*/
-		nbrchar_read = 0;
-		free_malloc(cmd, path, line, fullpath, flag_malloc);
-		line = NULL;
-		path = NULL;
-		fullpath = NULL;
-		flag_malloc = 0;
-
+				free_malloc(cmd, line, fullpath, flag_malloc), exit(i);
+		} /*line = NULL;*/
+		nbrchar_read = 0, free_malloc(cmd, line, fullpath, flag_malloc);
+		line = NULL, path = NULL, fullpath = NULL, flag_malloc = 0;
 	}
 	return (0);
 }
