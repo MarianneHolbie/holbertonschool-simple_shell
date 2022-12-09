@@ -3,9 +3,10 @@
 /**
  * print_full_env- function that print all environment variable
  *
+ * Return: 0 if no error
  */
 
-void print_full_env(void)
+int print_full_env(void)
 {
 	int i = 0;
 	char **g;
@@ -14,4 +15,6 @@ void print_full_env(void)
 
 	for (i = 0; g[i] != NULL; i++)
 		printf("%s\n", g[i]);
+
+	return (0);
 }

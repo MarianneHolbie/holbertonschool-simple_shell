@@ -14,19 +14,15 @@
 #include <errno.h>
 
 /**
- * struct node - single linkes list
- * @path_directory: string
- * @next: point to the next node
- * Description: singly linked list of node structure
+ * struct fnUnix_s - appel les fonctions du système ou autre...
+ * @nom: word to a fn
+ * @fp: fn ptr
  */
-
-typedef struct node
+typedef struct fnUnix_s
 {
-	char *path_directory;
-	struct node *next;
-} node_t;
-
-
+	char *nom;
+	int (*fp)(void);
+} fnUnix_t;
 extern char **environ;
 
 void free_malloc(char **token, char *path, char *line, char *fullpath, int fp_malloc);
@@ -34,8 +30,6 @@ char *_which(char *cmd, char *fullpath, char *path_var);
 char *_getenv(char *name);
 /* liste all directory path */
 char *_directory_path(char *path);
-/* create linked list of path directory */
-node_t *_linkedlist_dir(char *path);
 /* add new variable of environment or replace value */
 int _setenv(const char *name, const char *value, int overwrite);
 /* construct NAME=VALUE for environment variable */
@@ -44,7 +38,7 @@ char *build_var_env(const char *name, const char *value);
 int _setenv(const char *name, const char *value, int overwrite);
 /* implicit declaration of getline so i define it*/
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
-void print_full_env(void);
+int print_full_env(void);
 
 
 #endif

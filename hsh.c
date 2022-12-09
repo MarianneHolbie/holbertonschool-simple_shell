@@ -138,18 +138,15 @@ char *_which(char *cmd, char *fullpath, char *path_var)
 
 /**
  * loop_getline- loop function getline
- *
+ * @Hsh: the struct
  * Return: 0
  */
-
-
-
-int loop_getline(void)
+int loop_getline(fnUnix_t *Hsh)
 {
 	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
 	ssize_t nbrchar_read;
-	int i = 0, flag_malloc = 0;
+	int i = 0, j = 0, flag_malloc = 0;
 
 	while (1) /* loop for shell prompt */
 	{
@@ -180,9 +177,13 @@ int loop_getline(void)
 			path = _getenv("PATH");
 			if (path == NULL)
 				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
-
-			if (strcmp(*cmd, "env\n") == 0)
-				print_full_env();
+			for (j = 0; Hsh[j].nom; j++)
+			{
+				if (strcmp(*cmd, Hsh[j].nom) == 0)
+				{
+					Hsh[j].fp();
+				}
+			}
 
 			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
 			{
@@ -223,7 +224,12 @@ int loop_getline(void)
 
 int main(void)
 {
-	loop_getline();
+	fnUnix_t Hsh[] = {
+		{"env", print_full_env},
+		{0, NULL}
+	};
+
+	loop_getline(Hsh);
 
 	return (0);
 }
