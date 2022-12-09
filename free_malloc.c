@@ -3,7 +3,6 @@
 /**
  * free_malloc- frees all dynamic space alocation
  * @token: pointer in token
- * @path: pointer to path variable
  * @line: pointer of line sort of getline
  * @fullpath: point full path of command
  * @fp_malloc: flag to view if full_path is malloc
