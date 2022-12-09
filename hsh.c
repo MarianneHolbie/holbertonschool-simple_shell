@@ -173,6 +173,8 @@ int loop_getline(void)
 			if (cmd == NULL)
 				exit(0);
 			path = _getenv("PATH");
+			if (path == NULL)
+				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
 
 			if (strcmp(*cmd, "env\n") == 0)
 				print_full_env();
