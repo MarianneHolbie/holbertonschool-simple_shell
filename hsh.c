@@ -8,7 +8,6 @@
  * Return: array of word to split getline
  **/
 
-
 char **split_string(char *line, char **array, int nbrchar_read)
 {
 	char *delim = " \n\t\r", *token = NULL;
