@@ -28,6 +28,8 @@ char **split_string(char *line)
 	int i = 0;
 
 	token = strtok(line, delim);
+	if (token == NULL)
+		return (0);
 
 	array = malloc(sizeof(char *) * (strlen(token) + 1));
 	if (array == NULL)
@@ -108,14 +110,17 @@ int main(int ac, char **av, char **env)
 			break;
 
 		cmd = split_string(line);
-		_which(cmd);
-		i = execve_cmd(cmd, env);
-		if (i != 0) /* si le programme enfant s'est mal fini*/
+		if (cmd != NULL)
 		{
+			_which(cmd);
+			i = execve_cmd(cmd, env);
+			if (i != 0) /* si le programme enfant s'est mal fini*/
+			{
+				free_array(cmd);
+				break;
+			}
 			free_array(cmd);
-			break;
 		}
-		free_array(cmd);
 	}
 	free(line);
 	return (i);

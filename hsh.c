@@ -21,22 +21,24 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	}
 
 	token = strtok(line, delim);
+	if (token == NULL)
+		return (0);
 
-			/* +2 because add also NULL */
-			array = malloc(sizeof(char *) * (strlen(token) + 2));
-			if (array == NULL)
-			{
-				free(line);
-				line = NULL;
-				exit(0);
-			}
+	/* +2 because add also NULL */
+	array = malloc(sizeof(char *) * (strlen(token) + 2));
+	if (array == NULL)
+	{
+		free(line);
+		line = NULL;
+		exit(0);
+	}
 
-			for (i = 0; token != NULL; i++)
-			{
-				array[i] = token;
+	for (i = 0; token != NULL; i++)
+	{
+		array[i] = token;
 
-				token = strtok(NULL, delim);
-			}
+		token = strtok(NULL, delim);
+	}
 	array[i] = NULL;
 	token = NULL;
 
