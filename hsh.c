@@ -55,7 +55,7 @@ char **split_string(char *line, char **array, int nbrchar_read)
 int execve_cmd(char **array)
 {
 	char *cmd = NULL;
-	int status;
+	int status, execve_status;
 	pid_t child_pid;
 
 	if (array[0] == NULL)
@@ -72,8 +72,9 @@ int execve_cmd(char **array)
 	}
 	else if (child_pid == 0)
 	{
-		if (execve(cmd, array, environ) == -1)
-			perror("Error");
+		execve_status = execve(cmd, array, environ);
+		if (execve_status == -1)
+			return (-1);
 
 	}
 	else
@@ -138,13 +139,13 @@ char *_which(char *cmd, char *fullpath, char *path_var)
 
 /**
  * loop_getline- loop function getline
- *
+ * @envp: environment
  * Return: 0
  */
 
 
 
-int loop_getline(void)
+int loop_getline(char **envp)
 {
 	char *array[1024], *line = NULL, *fullpath = NULL, *path = NULL, **cmd = NULL;
 	size_t len = 0;
@@ -170,7 +171,7 @@ int loop_getline(void)
 			if (path == NULL && access(cmd[0], X_OK) != 0)
 				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
 			if (strcmp(*cmd, "env\n") == 0)
-				print_full_env();
+				print_full_env(envp);
 			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
 			{	fullpath = _which(cmd[0], fullpath, path);
 				if (fullpath == NULL)
@@ -190,13 +191,17 @@ int loop_getline(void)
 
 /**
  * main- loop shell prompt
- *
+ * @argc: count arg
+ * @argv: arguments
+ * @envp: environment
  * Return:0
  */
 
-int main(void)
+int main(int argc, char *argv[], char *envp[])
 {
-	loop_getline();
+	(void)argc;
+	(void)argv;
+	loop_getline(envp);
 
 	return (0);
 }
