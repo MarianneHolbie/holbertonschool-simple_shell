@@ -21,8 +21,10 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	}
 
 	token = strtok(line, delim);
+
 	if (token == NULL)
 		return (0);
+
 
 	/* +2 because add also NULL */
 	array = malloc(sizeof(char *) * (strlen(token) + 2));
@@ -36,7 +38,6 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	for (i = 0; token != NULL; i++)
 	{
 		array[i] = token;
-
 		token = strtok(NULL, delim);
 	}
 	array[i] = NULL;
@@ -169,11 +170,14 @@ int loop_getline(void)
 			line = NULL;
 			exit(0);
 		}
-		if (strcmp(line, "\n")) /* test if line = \n */
+		if (strcmp(line, "\n") != 0) /* test if line = \n */
 		{
 			cmd = split_string(line, array, nbrchar_read);
 			if (cmd == NULL)
+			{
+				free(line);
 				exit(0);
+			}
 			path = _getenv("PATH");
 			if (path == NULL)
 				dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);
