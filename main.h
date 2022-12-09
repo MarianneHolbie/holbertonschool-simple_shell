@@ -44,5 +44,7 @@ char *build_var_env(const char *name, const char *value);
 int _setenv(const char *name, const char *value, int overwrite);
 /* implicit declaration of getline so i define it*/
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+void print_full_env(void);
+
 
 #endif

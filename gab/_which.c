@@ -12,7 +12,7 @@ void _which(char **cmd)
 	char *chemin[1024], *buffer = NULL, *path_split = NULL, *token = NULL;
 	int count = 0, i = 0;
 
-	path_split = _getenv("PATH");
+	path_split = strdup(_getenv("PATH"));
 	/* split env */
 	token = strtok(path_split, ":");
 	while (token != NULL)
@@ -40,7 +40,6 @@ void _which(char **cmd)
 			/* check si ça existe */
 			if (access(buffer, F_OK) == 0)
 				break;
-
 			/* on free pour la prochaine boucle */
 			free(buffer);
 			buffer = NULL;
@@ -49,4 +48,5 @@ void _which(char **cmd)
 		free(cmd[0]);
 		cmd[0] = buffer;
 	}
+	free(path_split);
 }

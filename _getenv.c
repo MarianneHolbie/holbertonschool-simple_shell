@@ -6,6 +6,7 @@
  *
  * Return: ptr or NULL value
  */
+
 char *_getenv(char *name)
 {
 	char **env;

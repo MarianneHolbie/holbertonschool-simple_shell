@@ -8,7 +8,6 @@
  * Return: array of word to split getline
  **/
 
-
 char **split_string(char *line, char **array, int nbrchar_read)
 {
 	char *delim = " \n\t\r", *token = NULL;
@@ -22,7 +21,12 @@ char **split_string(char *line, char **array, int nbrchar_read)
 
 	token = strtok(line, delim);
 
-	array = malloc(sizeof(char *) * (strlen(token) + 1));
+	if (token == NULL)
+		return (0);
+
+
+	/* +2 because add also NULL */
+	array = malloc(sizeof(char *) * (strlen(token) + 2));
 	if (array == NULL)
 	{
 		free(line);
@@ -33,11 +37,11 @@ char **split_string(char *line, char **array, int nbrchar_read)
 	for (i = 0; token != NULL; i++)
 	{
 		array[i] = token;
-
 		token = strtok(NULL, delim);
 	}
 	array[i] = NULL;
 	token = NULL;
+
 	return (array);
 
 }
@@ -70,6 +74,7 @@ int execve_cmd(char **array)
 	{
 		if (execve(cmd, array, environ) == -1)
 			perror("Error");
+
 	}
 	else
 		wait(&status);
@@ -148,6 +153,8 @@ int loop_getline(void)
 
 	while (1) /* loop for shell prompt */
 	{
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "$ ", 2); /* print $ in the beginning of line */
 		nbrchar_read = getline(&line, &len, stdin);
 
 		if (nbrchar_read == -1)
@@ -162,10 +169,21 @@ int loop_getline(void)
 			line = NULL;
 			exit(0);
 		}
-		if (strcmp(line, "\n")) /* test if line = \n */
+		if (strcmp(line, "\n") != 0) /* test if line = \n */
 		{
 			cmd = split_string(line, array, nbrchar_read);
+			if (cmd == NULL)
+			{
+				free(line);
+				exit(0);
+			}
 			path = _getenv("PATH");
+			if (path == NULL && access(cmd[0], X_OK) != 0)
+				exit(127);
+				/*dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", cmd[0]);*/
+
+			if (strcmp(*cmd, "env\n") == 0)
+				print_full_env();
 
 			if (cmd[0][0] != '/' && strncmp(cmd[0], "./", 2) != 0)
 			{
@@ -181,7 +199,8 @@ int loop_getline(void)
 			i = execve_cmd(cmd);
 			if (i != 0) /* si le programme enfant s'est mal fini*/
 			{
-				free(line);
+				free_malloc(cmd, path, line, fullpath, flag_malloc);
+				/*free(line);*/
 				exit(i);
 			}
 		}
