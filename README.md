@@ -160,12 +160,19 @@ We have created a Manpage to to accompany the user.
 
 The projects include 6 files as follows: (to update withe the finals docs)
 
-* [_printf.c](https://github.com/AsiaGrpr/holbertonschool-printf) - Includes the main function `_printf`.
-* [_putchar.c](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/_putchar.c) - Includes the function `_putchar` that writes the character c to sdout.
-* [Fonctions.c](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/fonctions.c) - Includes the functions `print_char`, `print_string`, `print_integer`, allowing the respective following conversion: %c, %s, %d, %i.
-* [Binary.c](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/binary.c) - Includes the functions allowing the conversion from integer to binary, with %b specifier.
-* [Main.h](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/main.h) - Includes the header containing all the functions prototypes as well as the structure used for the `_printf` function.
-* [Man_3_printf](https://github.com/AsiaGrpr/holbertonschool-printf/blob/master/man_3_printf) - Includes the manual page of `_printf` function.
+* [_getenv.c](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/105322adea52258cd5352d093d5b85f3033df8b1/_getenv.c) - Function `_getenv` to get environment variable.
+* [free_malloc.c](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/105322adea52258cd5352d093d5b85f3033df8b1/free_malloc.c) - Function `free_malloc` that free all dynamic allocation memory during the hsh.c programm.
+* [print_full_env.c](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/105322adea52258cd5352d093d5b85f3033df8b1/print_full_env.c) - Function print_full_env.c that execute command buildin "env".
+* [hsh.c](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/105322adea52258cd5352d093d5b85f3033df8b1/hsh.c) - Main function for simple shell project that include functions ```split_string```, ```execve_cmd```, ```_which``` and ```loop_getline```.
+
+## FLOWCHART
+See after the flowchart global and for each function developped.
+![img](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/d37754b316951a7e8d41c7179d22454aa392a209/SimpleShell-Simple%20shell.jpg)
+![img](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/d37754b316951a7e8d41c7179d22454aa392a209/SimpleShell-split_string.jpg)
+![img](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/d37754b316951a7e8d41c7179d22454aa392a209/SimpleShell-_getenv.c.jpg)
+![img](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/d37754b316951a7e8d41c7179d22454aa392a209/SimpleShell-print_full_env.c.jpg)
+![img](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/d37754b316951a7e8d41c7179d22454aa392a209/SimpleShell-_which.jpg)
+![img](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/d37754b316951a7e8d41c7179d22454aa392a209/SimpleShell-execve_cmd.jpg)
 
 
 ## Acknowledgment
