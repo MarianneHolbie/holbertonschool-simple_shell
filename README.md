@@ -151,9 +151,10 @@ The simple shell is a command interpreter used to communicate with the Unix syst
 
 ## Manual Page
 
-We have created a Manpage to to accompany the user.
+We have created a Manpage to accompany the user.
 
-[Manpage](https://github.com/MarianneHolbie/)
+
+[Manpage](https://github.com/MarianneHolbie/holbertonschool-simple_shell/blob/main/man_1_simple_shell.1)
 
 
 ## Project Files Description
